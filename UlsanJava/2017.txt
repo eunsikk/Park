@@ -1,0 +1,303 @@
+1. 다음 클래스에는 컴파일 오류가 있다. 오류(error)가 있는 라인을 적고(1점), 
+이 오류(error)를 수정할 수 있는 방법을 제시하시오. 단, Person 클래스의 필드는 절대로 수정하지 말 것. 
+즉, Person 클래스에 내용을 추가(2점)하고,Exam01 클래스에서 추가한 내용에 접근하게 코드를 수정(2점).
+
+class Person{
+	public String name;
+	private int age;
+	protected int height;
+}
+public class Exam01 {
+	public static void main(String[] args){
+		Person aPerson=new Person();
+		aPerson.age=20;
+		aPerson.name="홍길동";
+		aPerson.height=176;
+	}
+}
+
+-> 13번에서 error 발생 / getter를 클래스에 추가하여 main을 수정
+public int getage() {
+    return age;
+}
+
+------------------------------------------------------------------------
+
+2. 다음 프로그램에서 오류(error)가 발생하는 라인(1점)과 경고(warning)가 발생하는 라인(1점)을 적고, 
+오류나 경고가 발생하는 이유를 각각 설명(각각 2점씩)하시오.
+
+package oop.Test02;
+class StaticExam{
+	public int x;
+	public static int y;
+	public static int m(){return y;}
+}
+public class Exam02 {
+	public static void main(String[] args){
+		StaticExam.x=5;
+		StaticExam.y=10;
+		int tmp=StaticExam.m();
+		StaticExam se=new StaticExam();
+		tmp=se.y;
+	}
+}
+
+-> 37번에서 error 발생 / class x 변수 제어자에 static 추가해줘야함.
+   41번에서 warning 발생 / static 선언된 y 변수는 클래스 이름으로 접근하는 게 올바름.
+
+------------------------------------------------------------------------
+
+3. 다음 프로그램에서 오류(error)가 발생하는 라인 2곳(각각 1점)을 적고,
+오류가 발생하는 이유(각각 2점)를 각각 설명하시오. 
+
+package oop.Test03;
+final class Rect{
+	final protected int MAX=5;
+	final public void m(){
+		MAX++;
+		System.out.println(MAX);
+	}
+}
+public class Exam03 extends Rect{
+	public void m(){
+		System.out.println(5);
+	}
+}
+
+-> 61번 error 발생 / final로 선언된 클래스는 상속 받을 수 없음.
+   57번 error 발생 / final로 선언된 상수는 변경할 수 없음.
+
+------------------------------------------------------------------------
+
+5. 다음 프로그램에서 출력되는 내용을 적으시오.
+
+package oop.Test05;
+class Plant{
+	public Plant(){
+		System.out.println("Plant");
+	}
+	public Plant(int x){
+		System.out.println("Plant:" + x);
+	}
+}
+class Tree extends Plant{
+	public Tree(){
+		super(11);
+	}
+	public Tree(int x){
+		System.out.println("Tree:" + x);
+	}
+}
+public class Exam05 {
+	public static void main(String[] args){
+		new Tree(11);
+	}
+}
+
+Plant
+Tree:11
+
+------------------------------------------------------------------------
+
+6. 다음 프로그램은 생성자로 인한 오류(error)가 발생한다. 오류가 발생하는 라인을 적고(1점), 
+오류가 발생하지 않게 코드를 추가하시오.(총 3점) 단. class MidTest는 수정할 수 없음.
+
+package oop.Test06;
+class MidTest{
+	private int jumsu;
+	protected MidTest(int i){
+		jumsu=i;
+	}
+}
+public class Exam06 extends MidTest{
+	private int points;
+	public Exam06(){
+		points=0;
+	}
+}
+
+-> 114에서 error가 발생 / Exam은 MidTest 클래스를 상속 받았고 Exam생성자를 호출하려고 할 때,
+MidTest 클래스 즉, 슈퍼클래스의 생성자도 호출이 먼저 된다. 근데 MidTest 클래스에는 인수를 받는
+생성자만이 존재하므로 Exam 클래스 안에 super(숫자)와 같은 호출 내용이 필요하다.
+
+------------------------------------------------------------------------
+
+7.  다음 프로그램에서 추상클래스의 선언이나 사용에 오류(error)가 있는 프로그램을 3개를 고르시오. 
+또한, 오류가 발생하는 이유를 구체적으로 적으시오.
+
+abstract class SeasonOne{
+	void m();
+}
+
+-> 정상
+
+abstract class SeasonTwo{
+	void m(){
+		System.out.println("");
+	}
+}
+
+-> 비정상, 매서드만 선언하고 상속 받은 클래스에서 구현해야한다.
+
+abstract class SeasonThree{
+	abstract void m();
+}
+class Spring extends SeasonThree{
+	
+}
+
+-> 비정상, 클래스에서 구현을 진행하지 않았다.
+
+abstract class SeasonFour{
+	abstract int m();
+}
+class Summer extends SeasonFour{
+	void m(){
+		System.out.println("가을이닷");
+	}
+}
+
+-> 비정상, 추상클래스에 있는 매서드와 return해주는 값이 다르다.
+
+------------------------------------------------------------------------
+
+8. 다음 프로그램은 2020 12월 25일의 약속을 저장하기 위해 Calendar 클래스를 
+활용하는 코드이다 주석문과 출력결과를 참고하여 알맞은 코드를 작성하시오.
+
+import java.util.Calendar;
+public class Exam08 {
+	public static void main(String[] args) {
+		Calendar date =           ①            ; // date 객체 생성
+		date.clear(); // 현재 date 객체에 저장된 정보를 모두 지운다.
+		date.            ②              ; // date 객체에 2020년의 년도 저장
+		date.            ③              ; // date 객체에 12월의 달 저장
+		date.            ④               ; // date 객체에 25일의 날짜 저장
+		System.out.println("약속 날짜는 " + date.        ⑤         + "년 " + 
+		(date.        ⑥          )+"월 "+date.               ⑦              )+"일");
+	}
+}
+1. Calendar.getInstance();로 얻어야함. 그 이유는 imprt한 Calender는 추상클래스임
+나머지는 data.set(Calendar.YEAR, 2022)과 같은 식으로 데이터를 set해줄 수 있고,
+data.get(Calendar.YEAR)과 같은 식으로 데이터를 get해서 출력할 수 있다.
+
+------------------------------------------------------------------------
+
+9. 다음 프로그램에서 오류(error)가 발생하는 라인을 적고, 오류가 발생하는 이유를 설명하시오.
+
+package oop.Test09;
+public class Exam09 {
+	public static void main(String[] args) {
+		Math math=new Math();		
+	}
+}
+
+-> Math클래스를 import하지 않았기 댸문에 Math에 대한 정보 자체가 존재하지 않는다.
+
+
+------------------------------------------------------------------------
+
+10. 다음 프로그램의 출력 값을 적으시오.
+
+package oop.Test10;
+class Number {
+	public int num1=5;
+	public static int num2=10;
+	public int increaseNum1(){
+		return num1++;
+	}
+	public static int increaseNum2(){
+		return num2++;
+	}
+}
+public class Exam10 {
+	public static void main(String[] args) {
+		Number n1=new Number();
+		System.out.println(n1.increaseNum1()); //①
+		Number n3=new Number();
+		System.out.println(n3.increaseNum1()); //②
+		Number.increaseNum2();
+		System.out.println(Number.increaseNum2()); //③
+		System.out.println(Number.increaseNum2()); //④
+	}
+}
+
+!!!!!!!! 기억을 해야함. i++와 ++i는 아예 다르다.
+++i는 전위 증가 연산자로 먼저 값을 증가시킨 후에 그 값을 return한다. 반대로,
+i++는 후위 증가 연산자로 먼저 값을 return 시킨 다음에 그 값을 증가시킨다. !!!!!!!!!!!!
+
+------------------------------------------------------------------------
+
+11. 다음 프로그램이 출력 값을 적으시오.
+
+package oop.Test11;
+class Person{}
+class Student extends Person{}	
+class Researcher extends Person{}
+class Professor extends Researcher{}
+public class Exam11 {
+	public static void main(String[] args){
+		Person per=new Person();
+		Person stu=new Student();
+		Person res=new Researcher();
+		Person pro=new Professor();
+		System.out.println(per instanceof Student); //① 
+		System.out.println(per instanceof Person); //②
+		System.out.println(stu instanceof Professor); //③
+		System.out.println(stu instanceof Person); //④
+		System.out.println(res instanceof Professor); //⑤
+		System.out.println(res instanceof Person); //⑥
+		System.out.println(pro instanceof Student); //⑦
+		System.out.println(pro instanceof Researcher); //⑧
+	}
+}
+
+false true false true false true false true
+
+------------------------------------------------------------------------
+
+12. 다음 프로그램의 출력 값을 적으시오.
+
+public class Exam12 {
+	public static void main(String[] args) {
+		String str1 = new String("java");
+		String str2 = new String(",자바");
+		str1 = str1.concat(str2); 
+		System.out.println(str1); //①
+		str1 = str1.replace("자바","coffee"); 
+		System.out.println(str1); //②
+		str1 = str1.substring(5); 
+		System.out.println(str1); //③
+		char ch = str1.charAt(1); 
+		System.out.println(ch); //④
+	}
+}
+
+java,자바
+java,coffee
+coffee
+o
+
+------------------------------------------------------------------------
+
+13. 문제에 주어지는 요구사항을 잘 읽고 java 코드를 작성하여라.(각각의 문제에 대한 답만 작성함) (총 27점)
+(1) 생물을 나타내는 클래스 Creature를 작성하여라. (16점)
+   ① Creature 클래스는 모든 패키지에서 접근이 가능함. -(1점)
+   ② age 필드를 가짐. (이 필드는 Creature 타입(클래스)의 객체에서만 접근 가능, 타입은 정수) - (1점)
+   ③ name 필드 가짐. (이 필드는 같은 패키지에서만 접근 가능, 타입은 문자열) - (1점)
+   ④ LIVE 상수를 가짐(상수 값은 정수 값으로 1을 가짐, 모든 클래스에서 접근 가능하며 공유함) - (2점)
+   ⑤ 숨을 쉬는 동작을 나타내는 메소드 void breathe()를 가짐(모든 객체가 접근 가능함) - (2점)
+   ⑥ 매개변수(age)로 지정하는 setAge(int age) 메소드를 가짐.(모든 객체에서 접근 가능, 리턴타입 없음) - (3점)
+   ⑦ 필드 age을 반환하는 getAge() 메소드를 가짐.(모든 객체에서 접근 가능) - (2점)
+   ⑧ 매개변수 2개를 갖는 생성자를 가짐(첫 번째 매개변수는 정수, 두 번째는 문자열). - (4점)
+   (첫 번째 매개변수 age)는 age를 설정하고, 두 번째 매개변수(naming)는 name를 설정한다.
+
+(2) 동물을 나타내는 클래스 Animal를 작성하여라. ( 9점)
+  ① Animal 클래스는 같은 패키지에서 접근 가능하고, Creature 클래스를 상속한다. - (1점)
+  ② Animal 클래스는 toe 필드를 가진다. (이 필드는 같은 패키지에서 접근 가능함) (1점)
+  ③ 매개변수 2개를 갖는 생성자를 작성하시오. 이 생성자는 수퍼클래스(Creature)의 생성자를 호출한다. - (4점)
+  ④ 매개변수가 없는 생성자를 작성하시오. (3점)
+   이 생성자는 ③에서 작성한 생성자를 사용하여 age 필드와 name 필드를 각각 10, “Lion” 으로 지정(세팅)한다. 
+ 
+(3) main() 메소드를 포함하는 Start 클래스를 작성하시오. (2점)
+   ① Start 클래스는 모든 클래스가 접근 가능하다. (1점)
+   ② main() 메소드는 Animal 타입의 객체를 생성한다. (1점)
