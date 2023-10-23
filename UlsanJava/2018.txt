@@ -1,0 +1,409 @@
+class Person{
+	private int age;
+}
+public class Exam01 {
+		public static void main(String[] args){
+		Person aPerson=new Person();
+		aPerson.setAge(25);
+		System.out.println(aPerson.getAge());
+	}
+}
+
+-> Person 클래스에 getter,setter를 추가한다.
+    public int getAge() {
+        return age;
+    }
+
+    public int setAge(int age) {
+        return this.age = age;
+    }
+
+------------------------------------------------------------------------
+
+2. 다음 프로그램에서 오류(error)가 발생하는 부분의 코드(2곳)를 적고, 
+오류가  발생하는 이유를 각각 설명(각각 2점씩)하시오.
+
+class StaticExam{
+	public int age;
+	public int getAge(){return age;}
+}
+public class Exam02 {
+	public static void main(String[] args){
+		StaticExam.age=5;
+		System.out.println(StaticExam.getAge());
+	}
+}
+
+-> public이기 때문에 바로 접근할 수 있지만 age가 static이 아니라서 접근이 불가능하다.
+
+------------------------------------------------------------------------
+
+3. 다음 프로그램에서 오류(error)가 발생하는 2곳(각각 1점)을 찾아, 
+오류가 발생하는 이유(각각 2점)를 각각 설명하시오.
+
+class Rect{
+    public static final int MAX=10;
+	final public void max(){
+		MAX++;
+		System.out.println(MAX);
+	}
+}
+public class Exam03 extends Rect{
+	public void max(){
+		System.out.println(10);
+	}
+}
+
+-> MAX++;에서 발생한다. final로 선언된 상수이기 때문에 MAX값은 변동 안된다.
+  max 매서드도 final로 선언되었기 때문에 상속을 해도 매서드의 내용을 바꿀 수 없다.
+   
+------------------------------------------------------------------------
+
+4. 다음 프로그램의 출력값을 적으시오.
+
+ppublic class Exam04Buffer {
+	public static void main(String[] args) {
+		StringBuffer sb = new StringBuffer("우리는");
+		sb.append(" 자바를 배운다."); 
+		System.out.println(sb);  //1번
+		sb.insert(7, " 2학년 2학기에"); 
+		System.out.println(sb); //2번
+		sb.replace(8, 10, "2018"); 
+		System.out.println(sb); //3번
+		sb.delete(8, 13); 
+		System.out.println(sb); //4번
+	}
+}
+우리는 자바를 배운다.
+우리는 자바를 2학년 2학기에 배운다.
+우리는 자바를 2018년 2학기에 배운다.
+우리는 자바를 2학기에 배운다.
+
+------------------------------------------------------------------------
+
+5. 다음 프로그램에서 출력되는 내용을 적으시오.
+
+class Plant{
+	public Plant(){
+		System.out.println("Plant");
+	}
+	public Plant(int x){
+		System.out.println("Plant:" + x);
+	}
+}
+class Tree extends Plant{
+	public Tree(){
+		super(33);
+		System.out.println("Tree");
+	}
+	public Tree(int x){
+		System.out.println("Tree:" + x);
+	}
+}
+public class Exam05 {
+	public static void main(String[] args){
+		new Tree();
+	}
+}
+
+Plant: 33
+Tree
+
+------------------------------------------------------------------------
+
+6. 다음 프로그램은 오류(error)가 발생한다. 오류가 발생하는 곳을 적고(1점), 
+오류가 발생하지 않게 코드를 추가하시오.(총 3점)
+단. class MidTest는 수정할 수 없다.
+
+class MidTest{
+	int jumsu;
+	String grade;
+	protected MidTest(int i, String grade){
+		jumsu=i;
+		this.grade=grade;
+	}
+}
+public class Exam06 extends MidTest{
+	public Exam06(){
+	}
+}
+
+-> Exam06 매서드 안에 아무것도 없으면 super()가 호출되는데, MidTest에는 매개변수를 받는 생성자가 있음.
+public Exam06() {
+    super(10, 2);     // 이런 식으로 수정해줘야함.
+}
+
+------------------------------------------------------------------------
+
+7.  다음 프로그램에서 추상클래스의 선언이나 사용에 오류(error)가 있다.
+오류가 발생하는 이유를 구체적으로 적으시오.
+
+코드 1
+abstract class SeasonOne{
+	void m();   -> abstract로 선언된 클래스의 내용 없는 매서드는 abstract로 선언되어야함.
+}
+
+코드 2
+abstract class SeasonThree{
+	abstract void m();
+}
+class Spring extends SeasonThree{ }  -> 여기서 구현을 안 해줘서 error 생김
+
+코드 3
+abstract class SeasonFour{
+	abstract int m();
+}
+class Summer extends SeasonFour{
+	void m(){
+		System.out.println("가을이닷"); -> 리턴값이 다름
+	}
+}
+
+------------------------------------------------------------------------
+
+다음 프로그램은 2020 12월 25일의 약속을 저장하기 위해 Calendar 클래스를 활용하는 코드이다.
+주석문과 출력결과를 참고하여 알맞은 코드를 작성하시오.
+
+import java.util.Calendar;
+public class Exam08 {
+	public static void main(String[] args) {
+		Calendar date =           ①            ; // date 객체 생성
+		date.clear(); // 현재 date 객체에 저장된 정보를 모두 지운다.
+		date.set(           ②              ); // date 객체에 2020년의 년도 저장
+		date.set(            ③              ); // date 객체에 12월의 달 저장
+	}
+}
+
+1: Calender date = Calendar.getInstance();
+2: date.set(Calendar.YEAR, 2020)
+3: date.set(Calendar.MONTH, 12)
+
+------------------------------------------------------------------------
+
+9. 다음 프로그램에서 오류(error)가 발생하는 부분의 코드를 적고, 오류가 발생하는 이유를 설명하시오.
+
+package oop.Test09;
+public class Exam09 {
+	public static void main(String[] args) {
+		Math math=new Math();		
+	}
+}
+
+Math 객체를 만드려면 Math를 선언해야지.
+
+
+------------------------------------------------------------------------
+
+10. 다음 프로그램의 출력 값을 적으시오
+
+class Number {
+	public int num1=33;
+	public static int num2=55;
+	public int increaseNum1(){
+		return ++num1;
+	}
+	public static int increaseNum2(){
+		return num2++;
+	}
+}
+public class Exam10 {
+	public static void main(String[] args) {
+		Number n1=new Number();
+		System.out.println(n1.increaseNum1()); //1번
+		
+		Number n3=new Number();
+		System.out.println(n3.increaseNum1()); //2번
+
+		Number.increaseNum2();
+		System.out.println(Number.increaseNum2()); //3번
+		System.out.println(Number.increaseNum2()); //4번
+	}
+}
+
+34
+34
+56
+57 이지만 num2는 58임.
+
+------------------------------------------------------------------------
+
+11. 다음 프로그램이 출력 값을 적으시오.
+
+class Person{}
+class Student extends Person{}	
+class Researcher extends Person{}
+class Professor extends Researcher{}
+public class Exam11 {
+	public static void main(String[] args){
+		Person per=new Person();
+		Person stu=new Student();
+		Person res=new Researcher();
+		Person pro=new Professor();
+		System.out.println(res instanceof Student);  // 1번
+		System.out.println(res instanceof Person);  // 2번 
+		System.out.println(pro instanceof Professor);  // 3번
+		System.out.println(pro instanceof Person);  // 4번
+		System.out.println(per instanceof Professor);  // 5번
+		System.out.println(per instanceof Person);  // 6번
+		System.out.println(stu instanceof Student);  // 7번
+		System.out.println(stu instanceof Researcher);  // 8번
+	}
+}
+
+false
+true
+true
+true
+false
+true
+true
+false
+
+------------------------------------------------------------------------
+
+12. 다음 프로그램의 출력 값을 적으시오.
+
+class Shape{
+	public Shape next;
+
+	public Shape() { next = null;}
+	 public void draw() {
+		System.out.println("Shape draw");
+	}
+}
+
+class Line extends Shape {
+	public void draw() { // 메소드 오버라이딩
+		 System.out.println("Line draw");
+	}
+}
+
+class Rect extends Shape {
+	public void draw() { // 메소드 오버라이딩
+		 System.out.println("Rect draw");
+	}
+}
+
+public class Exam12 {
+	public static void main(String[] args) {
+		Shape shape = new Shape();
+		Line line = new Line();
+		Shape p = line;
+		Shape rect = new Rect();
+		
+		shape.draw();  //1번
+		line.draw();  //2번
+		p.draw();     //3번
+		rect.draw();  //4번
+	}
+}
+
+Shape draw
+Line draw
+Line draw
+Rect draw
+
+------------------------------------------------------------------------
+
+13. 문제에 주어지는 요구사항을 잘 읽고 java 코드를 작성하여라.(각각의 문제에 대한 답만 작성함) 
+class Human {
+    public int age;
+    private String nation;
+    final static int LIVE = 1;
+
+    public void walk() {};
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+    public String getNation() {
+        return nation;
+    }
+
+    public Human(int age, String country) {}
+}
+
+
+class Pandora extends Human {
+    String present;
+
+    public Pandora(int age, String country) {
+        super(age, country);
+    }
+
+    public Pandora(String country) {
+        this(10, country);
+    }
+}
+
+
+public class Exam18 {
+    public static void main(String[] args) {
+        Pandora human = new Pandora("Greek");
+    }
+}
+
+------------------------------------------------------------------------
+
+4. 각각의 문제에 주어지는 요구사항을 잘 읽고 java 코드를 작성하여라.(각각의 문제에 대한 답만 작성함)
+
+interface Cooler {
+    final int MAX_TEMPERATURE = 20;
+    final int MIN_TEMPERATURE = -20;
+
+    abstract int temperatureChange(int temperature);
+    int temperatureUp();
+    int temperatureDown();
+}
+
+class Appliance {
+    public int temperature = 0;
+    String company;
+    public int year;
+    public Appliance(String company, int age) {
+        this.company = company;
+        this.year = year;
+    }
+}
+
+class Refrigerator extends Appliance implements Cooler{
+    public int temperatureChange(int temperature) {
+        if (MAX_TEMPERATURE < temperature || MAX_TEMPERATURE == temperature) {
+            this.temperature = MAX_TEMPERATURE;
+        }
+        else if (MAX_TEMPERATURE > temperature && MIN_TEMPERATURE < temperature) {
+            this.temperature = MIN_TEMPERATURE;
+        } 
+        else if (MIN_TEMPERATURE > temperature) {
+            this.temperature = temperature;
+        } return temperature;
+    }
+
+    public int temperatureUp() {
+        if(this.temperature > MAX_TEMPERATURE) {
+            this.temperature = MAX_TEMPERATURE;
+        } else {
+            this.temperature++;
+        } return temperature;
+    }
+
+    public int temperatureDown() {
+        if(this.temperature < MIN_TEMPERATURE) {
+            this.temperature = MIN_TEMPERATURE;
+        } else {
+            this.temperature--;
+        } return temperature;
+    }
+
+    public Refrigerator(String company, int year) {
+        super(company, year);
+        temperatureChange(301);
+    }
+}
+
+public class Exam18 {
+    public static void main(String[] args) {
+        new Refrigerator("SamSung", 1);
+    }
+}
