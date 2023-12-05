@@ -362,7 +362,7 @@ class Appliance {
     String company;
     public int year;
     public Appliance(String company, int age) {
-        this.company = company;
+        this.company = company;g
         this.year = year;
     }
 }
