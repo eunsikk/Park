@@ -35,10 +35,10 @@ public class MenuActionEventEx extends JFrame {
     class MenuActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String cmd = e.getActionCommand();
-            switch (cmd) { // 메뉴 아이템의 종류 구분
+            switch (cmd) {
                 case "Load":
                     if (imgLabel.getIcon() != null)
-                        return; // 이미 로딩되었으면 리턴
+                        return;
                     imgLabel.setIcon(new ImageIcon("images/img.jpg"));
                     break;
                 case "Hide":
