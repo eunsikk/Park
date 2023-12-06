@@ -1,31 +1,37 @@
 package JavaEx.JavaReport.JavaReport07;
 
-import java.util.*;
+import java.util.Vector;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class RainfallStatistics {
-    public static void print(Vector<Integer> v) {
-        int sum = 0;
-        Iterator<Integer> it = v.iterator();
+
+    private void print(Vector<Double> v) {
+        Double sum = 0.0;
+        Iterator<Double> it = v.iterator();
         while (it.hasNext()) {
-            int n = it.next();
-            System.out.print(n + " ");
-            sum += n;
+            Double fallRain = it.next();
+            sum += fallRain;
         }
+
         System.out.println();
-        System.out.println("현재 평균" + sum / v.size());
+        System.out.println("현재 강수량의 평균: " + sum);
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Vector<Integer> v = new Vector<Integer>();
-        System.out.print("강수량 입력 (0 입력시 종료)>>");
+        Vector<Double> v = new Vector<Double>();
+        System.out.println("강수량을 입력해주세요.(0.1부터 가능) >> ");
         while (true) {
-            int n = scanner.nextInt();
-            if (n == 0)
-                break;
-            v.add(n);
+            Double fallRain = scanner.nextDouble();
+            if (!scanner.hasNextDouble()) {
+                System.out.println("숫자만을 입력하세요.");
+                return;
+            } else {
+                v.add(fallRain);
+            }
         }
+
         print(v);
-        scanner.close();
     }
 }
