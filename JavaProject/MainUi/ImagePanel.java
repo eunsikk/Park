@@ -1,37 +1,51 @@
 package JavaProject.MainUi;
 
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import javax.imageio.ImageIO;
+import java.io.InputStream;
 
 public class ImagePanel extends JPanel {
-    private BufferedImage image;
+    private BufferedImage background;
+    private ImageIcon characterImage;
 
-    public ImagePanel(URL resource) {
+    public ImagePanel(InputStream inputStream) {
         try {
-            BufferedImage originalImage = ImageIO.read(resource);
-            int width = originalImage.getWidth();
-            int height = originalImage.getHeight();
-
-            image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = image.createGraphics();
-
-            float alpha = 0.45f;
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-            g2d.drawImage(originalImage, 0, 0, null);
-            g2d.dispose();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            background = ImageIO.read(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    public void setCharacterImage(ImageIcon newCharacterImage) {
+        Image scaledCharacterImage = newCharacterImage.getImage().getScaledInstance(
+                background.getWidth(), background.getHeight(), Image.SCALE_SMOOTH);
+        this.characterImage = new ImageIcon(scaledCharacterImage);
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        Graphics2D g2d = (Graphics2D) g.create();
+
+        // 렌더링 품질을 향상시키기 위한 설정
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // 배경 이미지 그리기
+        if (background != null) {
+            g2d.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+        }
+
+        // 캐릭터 이미지 그리기
+        if (characterImage != null) {
+            g2d.drawImage(characterImage.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+        }
+
+        g2d.dispose(); // 그래픽스 객체 정리
     }
 }

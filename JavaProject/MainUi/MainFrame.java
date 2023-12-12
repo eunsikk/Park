@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
     private DefaultListModel<String> model;
-    private JPanel characterInfoPanel;
+    private ImagePanel backgroundPanel;
 
     public MainFrame() {
         setTitle("Star Rail CharacterGuide");
@@ -22,14 +22,17 @@ public class MainFrame extends JFrame {
 
         ListScrollPane listScrollPane = new ListScrollPane(model);
         JList<String> list = listScrollPane.getList();
+
+        // ImagePanel을 backgroundPanel로 이름 변경 및 초기화
+        backgroundPanel =
+                new ImagePanel(getClass().getResourceAsStream("/PropertyImages/background.png"));
+        mainFrame.add(backgroundPanel, BorderLayout.CENTER);
+
+        // CharacterSelectionListener에 backgroundPanel 전달
         CharacterSelectionListener selectionListener =
-                new CharacterSelectionListener(characterInfoPanel);
+                new CharacterSelectionListener(backgroundPanel, model);
         list.addListSelectionListener(selectionListener);
         mainFrame.add(listScrollPane, BorderLayout.WEST);
-
-        ImagePanel bacImagePanel =
-                new ImagePanel(getClass().getResource("/PropertyImages/background.png"));
-        mainFrame.add(bacImagePanel);
 
         setSize(900, 700);
         setVisible(true);

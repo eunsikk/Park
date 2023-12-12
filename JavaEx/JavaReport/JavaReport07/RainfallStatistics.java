@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class RainfallStatistics {
 
-    private void print(Vector<Double> v) {
+    public static void print(Vector<Double> v) {
         Double sum = 0.0;
         Iterator<Double> it = v.iterator();
         while (it.hasNext()) {
@@ -21,17 +21,21 @@ public class RainfallStatistics {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Vector<Double> v = new Vector<Double>();
-        System.out.println("강수량을 입력해주세요.(0.1부터 가능) >> ");
+        System.out.print("강수량을 입력해주세요.(0을 입력함녀 결과 반출) >> ");
         while (true) {
-            Double fallRain = scanner.nextDouble();
             if (!scanner.hasNextDouble()) {
                 System.out.println("숫자만을 입력하세요.");
-                return;
-            } else {
-                v.add(fallRain);
+                scanner.next();
+                continue;
             }
-        }
 
+            Double fallRain = scanner.nextDouble();
+            if (fallRain == 0) {
+                System.out.println("프로그램을 종료합니다.");
+                break;
+            }
+            v.add(fallRain);
+        }
         print(v);
     }
 }

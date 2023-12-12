@@ -19,14 +19,13 @@ public class CharacterActionListener implements ActionListener {
             model.addElement("5⭐토파즈");
         } else if ("얼음".equals(e.getActionCommand())) {
             model.addElement("5⭐경류");
-            model.addElement("5⭐연경");
             model.addElement("5⭐게파드");
-            model.addElement("5⭐March 7th");
+            model.addElement("4⭐March 7th");
         } else if ("허수".equals(e.getActionCommand())) {
             model.addElement("5⭐음월");
             model.addElement("5⭐나찰");
             model.addElement("5⭐웰트");
-            model.addElement("5⭐어공");
+            model.addElement("4⭐어공");
         } else if ("물리".equals(e.getActionCommand())) {
             model.addElement("5⭐클라라");
             model.addElement("4⭐나타샤");
