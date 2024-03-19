@@ -1,0 +1,300 @@
+1. 다음 프로그램의 결과를 적으시오.
+    public class StringEx {
+        public static void main(String[] args) {
+            String a = new String("Python, C++ ");
+            String b = new String(" Hi ");
+            System.out.println(a + "의 길이는 " + a.length()); 
+            a = b.concat(a); 
+            a = a.replace("Python","Java"); 
+            a = a.trim(); 
+            System.out.println(a);
+            a = a.substring(3); 
+            System.out.println(a);
+            String s[] = a.split(","); 
+            System.out.println(s[0].charAt(2));
+    }
+}
+
+- a의 길이는 12 \n Hi Java, C++ \n Java C++ \n v
+
+2. vector를 이용하여 이름을 입력받아 제일 긴 이름을 출력하는 프로그램이다. 아래 코드를 완성하시오.
+이름 입력 (q 입력시 종료)>> apple
+[apple]이름 입력 (q 입력시 종료)>> hi
+[apple, hi]이름 입력 (q 입력시 종료)>> banana
+[apple, hi, banana]이름 입력 (q 입력시 종료)>> water
+[apple, hi, banana, water]이름 입력 (q 입력시 종료)>> baby
+[apple, hi, banana, water, baby]이름 입력 (q 입력시 종료)>> q
+가장 긴 이름은 : banana
+
+public class RainfallStatistics {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ① // 이름을 저장하는 Vector v생성
+        while(true) {
+            System.out.print("이름 입력 (q 입력시 종료)>> ");
+            String name = scanner.next();
+            if( ② ) // "q" 입력시 무한반복을 벗어남
+                break;
+            ③ // 입력받은 이름을 vector에 추가
+            System.out.println(v);
+        }
+        // 가장 긴 이름 출력
+        int longestIndex = 0; // 현재 가장 긴 이름이 있는 ArrayList 내의 인덱스
+        for(int i=1; i<v.size(); i++) {
+            if( ④ ) // 이름 길이 비교
+                longestIndex = i; // i 번째 이름이 더 긴 이름임
+        }
+        System.out.println("\n가장 긴 이름은 : " + ⑤ );
+        scanner.close();
+    }
+}
+
+- 1: Vector<String> v = new Vector<String>();
+  2: if(name.equal("q")) {break};
+  3: v.add(name);
+  4: if(v.get(i).length() > v.get(longestIndex).length()) {longesIndex = i}
+  5: v.get(longesIndex);
+
+3. “c:\temp\phone.txt” 파일의 데이터를 읽어 아래와 같이 출력되도록 프로그램을 완성하시오
+
+홍길동 010-1111-1111
+이순신 010-2222-2222
+김유신 010-2222-3333
+
+public class ReaderEx {
+    public static void main(String[] args) {
+        InputStreamReader fr = null;
+        FileInputStream f = null;
+        try {
+            f = new ① 
+            fr = new ② 
+            int c;
+            while ( ③ ) {
+                System.out.print((char)c);
+            }
+            f.close()
+
+- 1: new FIleinputStream(c:\temp\phone.txt);
+  2: new InputStreamReader(f);
+  3: (c = fr.read() != -1)
+
+4. 다음과 같은 스윙 프로그램을 만드시오. 
+그림과 같이 프레임의 컨텐트팬으로 BorderLayout 배치관리자를 설정하고, SOUTH 영역과 
+CENTER 영역에는 JPanel을 상속받은 패널을 만든다. 
+SOUTH 영역의 패널에는 4개의 JRadioButton 컴포넌트를, CENTER 영역의 패널에는 
+JLabel 컴포넌트를 표시하고, JRadioButton의 선택에 따라 JLabel의 글꼴이 변경되는 프로그램을 완성하시오. (총 25점) 
+
+public class JPanelListener extends JFrame {
+    private JRadioButton[] font = new JRadioButton[4]; 
+    private String [] names= {"LARGE", "SMALL","BOLD", "ITALIC"}; 
+    private JLabel la=new JLabel("JAVA Program"); 
+
+    public JPanelListener() {
+        c.setLayout(new BorderLayout()); 
+        JPanel buttonPanel = new JPanel(); 
+        JPanel labelPanel = new JPanel(); 
+
+        MyItemListener listener = new MyItemListener(); 
+        ButtonGroup g = new ButtonGroup(); 
+
+        for(int i=0;i<font.length;i++) {
+            font[i]= ① 
+            g.add(font[i]); 
+            buttonPanel.add(font[i]);
+            font[i]. ②
+        }
+
+        font[2]. ③ 
+        c. ④ 
+        labelPanel. ⑤ 
+    }
+
+    class MyItemListener ⑥ {
+        public void ⑦ {
+            if( ⑧ ) 
+                return; 
+
+            if( ⑨ ) 
+                la. ⑩ (new Font("Gothic", Font.CENTER_BASELINE,40));
+            else if(//.......나머지 코드생략.
+        }
+    }
+}
+
+- 1: font[i] = names[i];
+  2: font[i].addItemListener(listener);
+  3: font[2].setSelected(true);
+  4: c.add(buttonPanel, BorderLayout.SOUTH);
+  5: labelPanel.add(la);
+  6: implements ItemListener;
+  7: public void itemStateChange (ItemEvent e)
+  8: (e.getStateChange() != ItemEvent.SELECTED
+  9: e.getItem() == font[0])
+ 10: setFont()
+
+  
+5. 아래 결과 같이 버튼을 누르면 번갈아 가면서 타이틀과 버튼 문자열이 함께 변하도록 버튼에 대한 액션리스너를 내부 클래스로 
+구현하시오.
+
+
+public class InnerClassListener extends JFrame{
+    public InnerClassListener() {
+        setTitle("내부클래스 구현");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());;
+        JButton btn = new JButton("JAVA");
+        btn.addActionListener(new MyActionListener()); // Action 이벤트 리스너 달기
+        c.add(btn);
+        setSize(350,150);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        new InnerClassListener();
+}
+//독립된 클래스로 이벤트 리스너를 작성한다.
+
+class ButtonActionListener implements ActionListener {
+    public void actionPerformed (ActionEvent e) {
+        JButton button = (JButton)e.getSource();
+        if (button.getText().equals("JAVA")) {
+            button.setText("사랑해");
+        } else if (button.getText().equals("사랑해")) {
+            button.setText("JAVA");
+        }
+    }
+}
+
+
+6. 패널 컨텐트팬에 그림과 같이 원호를 그린다. 패널 컨텐트팬 위치에 마우스 버튼을 클릭하면 패널의 배경색이 랜덤하게 변경되고 원호 
+위치도 클릭 위치로 변경되는 스윙 프로그램을 완성하시오.
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class PaintEvent extends JFrame {
+    int x, y; // x, y 좌표
+    private MyPanel panel = new MyPanel(); // 그래픽 패널 
+
+    public PaintMouseEvent() {
+        //.......코드 생략
+
+        // ① 생성한 panel 패널을 컨텐트팬으로 사용
+        Container c = getContentPane(); // ② 컨텐트팬을 알아내기
+        c.addMouseListener(new MyMouseListener()); // ③ 컨텐트팬에 마우스 리스너 달기
+
+        //.......코드 생략
+    }
+
+    // 패널 위치에서 마우스를 클릭하면 배경색이 랜덤하게 변경되는 마우스 리스너 구현
+    class MyMouseListener extends MouseAdapter { // ④ MouseAdapter
+        public void mousePressed(MouseEvent e) {
+            int r = (int) (Math.random() * 256);
+            //......rgb의 g, b도 동일 코드임
+            Component c = e.getComponent(); // ⑤ 마우스가 클릭된 컴포넌트의 레퍼런스 알아내기 
+            c.setBackground(new Color(r, g, b)); // ⑥ rgb 값으로 배경색 설정
+            x = e.getX(); // ⑦ 마우스 위치의 X좌표값 얻기
+            y = e.getY(); // 마우스 위치의 Y좌표값 얻기
+        }
+    }
+
+    // 패널에 그래픽을 그린다
+    class MyPanel extends JPanel {
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g); // JPanel의 paintComponent() 호출 
+            g.setColor(Color.RED);
+            g.drawArc(x, y, 50, 50, 45, 300); // ⑧ (x, y)에서 50x50 크기의 원호를 그린다. startAngle은 45, arcAngle은 300
+        }
+    } 
+    //.........코드 생략 
+}
+
+- 1. setContentPane(Panel);
+2. getContentPane();
+3. c.addMouseListener(new MyMouseListener);
+4. implements 
+5. e.getComponet();
+6. setBackground(r,g,b);
+7. getX();
+8. getY();
+
+7. 다음 조건을 만족하는 다이얼로그 프로그램을 완성하시오. 
+1) ‘다이얼로그 예제’ 창의 텍스트 란에 이름을 입력한 후 Enter를 누른다. 
+2) 아래 그림과 같이 확인 다이얼로그가 나타난다. ‘Yes’ 버튼을 선택하면 레이블에 “저장되었습니다“를 표시하고, ‘No’ 버튼을 선택하면 
+텍스트 입력란에서 입력된 텍스트를 지운다. 확인 다이얼로그 창의 X를 누르면 원래 입력된 상태로 되돌아온다.
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class DialogEx extends JFrame {
+    private JTextField tf = new JTextField(10);
+    private JLabel la = new JLabel();
+
+    public DialogEx() {
+        setTitle("다이얼로그 예제");
+        //.......... 코드 생략
+        Container c = getContentPane();
+        c.add(new JLabel("이름 입력 후 <Enter> 키"));
+        c.add(tf); 
+        c.add(la);
+        setSize(300,150); 
+        setVisible(true);
+
+        // JTextField에 ActionListener 등록. <Enter> 키 처리 (익명 클래스로 구현)
+        tf.addActionListener(new ActionListener() {
+            public void ① (ActionEvent e) {
+                JTextField t = (JTextField)e.②; //JTextField 소스 값 얻기
+                la.setText("");
+                // 입력된 텍스트 저장여부를 묻는 다이얼로그
+                int result = JOptionPane.③(null, "저장할까요?", "Save(Yes/No)", JOptionPane.YES_NO_OPTION); 
+                if(result == ④) { // 다이얼로그 닫기 창 선택
+                    return; // 그냥 리턴
+                } else if(result == ④) { //"YES"를 선택한 경우 
+                    t.setText(""); // 텍스트 필드 내용 지우기
+                    ⑤; //레이블에 "저장되었습니다" 표시
+                } else { //"NO"를 선택한 경우 
+                    t.setText(""); // 텍스트 필드 내용 지우기
+                    //........................코드 생략
+                }
+            }
+        });
+    }
+}
+
+- 1. actionPerforemd
+2. getSource();
+3. showConfirmDialog
+4. JOptionPane.CLOSED_OPTION과 JOptionPane.YES_OPTION
+5. la.setText("레이블레 저장되었습니다");
+
+8. ‘리스트 예제’ 창의 텍스트 란에 과일 이름을 입력한 후 Enter를 누르면 리스트목록에 입력된 텍스트를 추가하는 프로그램이다 
+완성하시오
+
+public class ListEx extends JFrame {
+    private JTextField tf = new JTextField(10);
+    private ........ //코드 생략 //리스트 항목으로 추가될 Vector v 생성
+    ① // Vector v의 값을 가지는 JList인 nameList 생성 
+    public ListEx() {
+        ...... //코드생략
+        c.add(new JLabel("과일이름 입력 후 <Enter> 키"));
+        c.add(tf);
+        v.add("사과"); v.add("포도");
+        nameList. ② // 리스트가 보여주는 행의 수를 5로 지정
+        nameList. ③ // 리스트의 폭은 100으로 지정
+        c.add(new JScrollPane(nameList)); 
+        ...... //코드생략
+        // JTextField에 ActionLister 등록. <Enter> 키 처리( 익명 클래스로 구현 )
+        tf. //앞 문제와 동일하여 생략{
+            public void........ //앞 문제와 동일하여 생략 {
+                JTextField t = (JTextField)e. //앞 문제와 동일하여 생략
+                v.add( ④ ); // 텍스트필드의 값을 벡터에 추가
+                t.setText("");
+                nameList. ⑤ //벡터 v를 리스트에 다시 연결
+...... //코드생략
+
+- 1: JList<E> nameList = new JList<E>(Vector v);
+  2: nameList.setVisiblRowCount(5);
+  3: nameList.setFixedCellWidth(100);
+  4: v.add(t.getText());
+  5: nameList.setListData(new Vector<>(v));

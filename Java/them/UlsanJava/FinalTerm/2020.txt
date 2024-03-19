@@ -1,0 +1,299 @@
+3. Scanner로 입력받은 이름과 전화번호를 “stop”을 입력할 때까지 한 줄에 한 사람씩 입력한 후 "c:\\temp\\phone.txt"에 저장한다. 
+"c:\\temp\\phone.txt"에 저장된 파일의 내용을 읽어 아래의 결과처럼 출력되도록 코드를 완성하시오. (총 16점) 
+ (텍스트 파일로 저장하고, 텍스트 파일의 데이터를 읽어서 출력) 
+
+import ...... // 코드생략
+public class PhoneFileEx_03 {
+    public static void main(String[] args) {
+        fw = null; // ① 파일 출력 스트림(1점)
+        fr = null; // ② 파일 입력 스트림(1점)
+        File f1 = new File("c:\\temp\\phone.txt");
+        File f2 = new File("c:\\temp\\phone.txt");
+        // 키보드로 입력한 자료를 파일로 저장
+        try {
+            fw = ; //③ 파일 출력 스트림 생성(2점)
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("전화번호 입력 프로그램입니다.");
+            while(true) {
+                System.out.print("이름 전화번호 >> ");
+                ; // ④ 한 줄을 읽는다. (2점)
+                if( ) //⑤ stop를 입력하면 입력 종료 (2점)
+                    ......; // 코드 생략(입력 종료)
+                ; // ⑥ 한 줄 띄어 저장하기 위해 "\r\n"을 붙인다.(2점)
+            }
+            System.out.println( +"에 저장하였습니다."); // ⑦ 저장된 파일의 경로 출력(1점)
+            scanner.close();
+            fw.close();
+            System.out.println("파일의 크기는"+ +"입니다."); //⑧저장된 파일의 크기 출력(1점)
+        } 
+        catch (........ // 예외처리(코드생략)
+        // 파일에 저장된 자료을 읽은 후 출력
+        try {
+            fr = ; // ⑨ 파일 입력 스트림 생성(2점)
+            ............... // 읽을 파일의 경로 출력(코드생략)
+            int c;
+            while((c = ) { //⑩ 한 문자씩 파일의 끝까지 읽는다(2점)
+                System.out.print((char)c); // 한 문자씩 출력
+            }
+            fr.close();
+        } 
+        catch (........ // 예외처리(코드생략)
+    }
+}
+
+- 1. FileOutputStream
+2. FileInputStream
+3. new FileOutputStream();
+4. String number = scanner.nextLine();
+5. if(number.equal("stop"))
+6. 모르겠음
+7. 모르겠음. 저장된 파일의 경로 출력 문법이 있나?
+8. 모르겠음. 저장된 파일의 크기 출력이 있나?
+9. new FileInputtStream();
+10. while((c = fr.read()!=-1))
+
+4. 다음과 같은 스윙 프로그램을 만드시오. 그림과 같이 프레임의 컨텐트팬으로 BorderLayout 배치관리자를 설정하고, NORTH 영역과 
+CENTER 영역에는 JPanel을 상속받은 패널을 만든다. NORTH 영역의 패널에는 4개의 JRadioButton 컴포넌트를, CENTER 영역의 패널
+에는 JLabel 컴포넌트를 표시하고, JRadioButton의 선택에 따라 JLabel의 글꼴이 변경되는 프로그램을 완성하시오. (총 25점)
+
+import ..... //코드생략
+
+public class JPanelListener_04 extends JFrame {
+    private JRadioButton[] font = ; //① 라디오버튼 배열(2점)
+    private String[] names = ; //② 라디오버튼의 문자열로 사용할 문자열 배열(1점)
+    private JLabel la = new JLabel("JAVA Program"); // 레이블
+
+    public JPanelListener_04() {
+        setTitle("라디오버튼예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new BorderLayout());
+
+        JPanel buttonPanel = new JPanel(); //4개의 라디오버튼을 부착할 패널
+        JPanel labelPanel = new JPanel(); // 레이블을 부착할 패널
+        buttonPanel.setBackground(Color.lightGray); // 라디오버튼 패널의 배경색(lightGray)
+        labelPanel.setBackground(Color.WHITE); //레이블 패널의 배경색(WHITE)
+
+        MyItemListener listener = new MyItemListener(); 
+        ; //③ 라디오 버튼을 묶을 그룹 객체(이름은 g) 생성(2점)
+
+        for (int i = 0; i < font.length; i++) {
+            font[i] = ; //④ names[i]의 문자열로 라디오 버튼 생성(2점)
+            ; // ⑤ 그룹 객체에 라디오 버튼 부착(2점)
+            buttonPanel.add(font[i]); // ⑥ 라디오 버튼 패널에 부착(1점)
+            font[i].addItemListener(listener); // ⑦라디오 버튼에 Item 리스너 등록(2점)
+        }
+
+        font[2].setSelected(true); // ⑧ font[2]를 선택상태로 설정(2점)
+
+        c.add(buttonPanel, BorderLayout.NORTH); //컨텐트팬의 NORTH에 라디오 버튼패널 부착
+        //.............. 레이블의 폰트 설정(코드생략)
+        la.setForeground(Color.RED); //레이블의 글자색 설정(레드)
+        labelPanel.add(la); //레이블 패널에 부착
+        c.add(labelPanel, BorderLayout.CENTER); //컨텐트팬의 CENTER에 레이블 패널 부착
+
+        setSize(350, 200);
+        setVisible(true);
+    }
+
+    class MyItemListener { //⑨ Item 리스너 구현(2점)
+        public void itemStateChanged(ItemEvent e) { //⑩ 버튼그룹에 속한 라디오버튼의 선택상태가 변하면 호출(2점)
+            if (e.getStateChange() == ItemEvent.DESELECTED) //⑪ 선택상태가 해제된 경우(3점) 
+                return; //선택상태가 해제된 경우 그냥 리턴
+            // 여기서부터 조건 및 폰트 설정 코드 생략
+        }
+    }
+
+    public static void main(String[] args) {
+        new JPanelListener_04();
+    }
+}
+
+- 1. new JRadioButton[4];
+2. {LARGE, SMALL, BOLD, ITALIC}
+3. ButtonGroup g = new ButtonGroup();
+4. font[i] = new JButton(names[i]);
+5. g.add(font[i]);
+6. buttonPanel.add(font[i]);
+7. font[i].addItemListener;
+8. setSelected();
+9. implements ItemListener
+10. public void itemStateChanged(ItemEvent e)
+11. if(e.getStateChange() != ItemEvent.SELECTED)
+12. if(e.getIem().equals("LARGE"))
+13. la.setFont((new Font("Gothic", Font.CENTER_BASELINE,40));)
+
+5. 패널 컨텐트팬에 그림과 같이 원호와 문자열을 그린다. 패널 컨텐트팬 위치에 마우스 버튼을 클릭하면 패널의 배경색이 랜덤하게 변경되
+고 원호와 문자열의 위치도 변경되는 스윙 프로그램을 완성하시오. 
+
+import ..... //코드생략
+
+public class PaintEvent_05 extends JFrame {
+    private MyPanel panel = new MyPanel();
+
+    public PaintEvent_05() {
+        setTitle("JPanel의 paintComponent()예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ; //① 생성한 panel 패널을 컨텐트팬으로 사용(2점)
+        Container c = getContentPane(); //컨텐트팬을 알아내기
+        // ② 컨텐트팬에 마우스 리스너 달기(3점)
+        setSize(320, 200);
+        setVisible(true);
+    }
+
+    // 패널 위치에서 마우스를 클릭하면 배경색이 랜덤하게 변경되는 마우스 리스너 구현
+    class MyMouseListener { // ③ 마우스 리스너 구현(2점)
+        public void { // ④ 마우스를 클릭하면(2점) 
+            int r = (int)(Math.random()*256); //0~255 난수
+            int g = (int)(Math.random()*256); //0~255 난수
+            int b = (int)(Math.random()*256); //0~255 난수
+            Component c = ; // ⑤ 마우스가 클릭된 컴포넌트의 레퍼런스 알아내기(2점) 
+            c.setBackground( ); // ⑥ 마우스가 클릭된 컴포넌트의 배경색을 난수의 rgb로 지정(2점) 
+        }
+    }
+
+    //패널에 그래픽을 그린다
+    class MyPanel extends JPanel {
+        public void paintComponent(Graphics g) {
+            ; // ⑦ JPanel의 paintComponent() 호출 (1점)
+            int x = (int)(Math.random()*200+1); //x축 위치 값의 난수(1~200) 
+            int y = (int)(Math.random()*100+1); //y축 위치 값의 난수(1~100) 
+            g.setColor(Color.BLACK);
+            g. ; // ⑧ (x, y)에서 50x50 크기의 원호. startAngle은 45, arcAngle은 300(2점)
+            g. ; // ⑨ (x, y) 위치에 "Hi!" 문자열을 그린다. (2점)
+        }
+    }
+
+    public static void main(String[] args) {
+        new PaintEvent_05();
+    }
+}
+
+
+- 1. setConentPane(Panel);
+2. c.addMouseListener(new MyMouseListener());
+3. implements MoustListener 
+4. public void MousePressed(mouseEvent e)
+5. getComponent();
+6. c.setBackground(r,g,b);
+7. super.paintComponent(g);
+8. g.drawArc(x,y,50,50,45,300);
+9. g.setLocation(x,y).setText("H!");
+
+6. 다음과 그림과 같이 버튼을 누르면 Hide/Show를 반복하는 프로그램을 완성하시오. (총 9점) 
+
+import ..... //코드생략
+
+public class ActionListenerEx_06 extends JFrame {
+    private MyPanel panel = new MyPanel();
+
+    public ActionListenerEx_06() {
+        setTitle("액션리스너 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //......................생성한 panel 패널을 컨텐트팬으로 사용(코드 생략)
+        setSize(300, 150);
+        setVisible(true);
+    }
+
+    class MyPanel extends JPanel {
+        private JButton button = new JButton("Hide/Show");
+        private JLabel label = new JLabel("Start");
+        private boolean showFlag = true;
+
+        public void paintComponent(Graphics g) {
+            //...................JPanel의 paintComponent() 호출 (코드 생략)
+            if (showFlag) // true이면 
+                ; //① 레이블 보이기(1점)
+            else //false이면
+                ; //② 레이블 감추기(1점)
+        }
+
+        public MyPanel() {
+            //...................레이블 폰트 지정(코드 생략)
+            add(button);
+            add(label);
+            button.addActionListener(new ActionListener() { //③ 버튼의 액션 리스너 구현(2점)
+                @Override
+                public void actionPerformed(ActionEvent e) { //④ 액션 리스너 실행(2점)
+                    showFlag = !showFlag; // ⑤true와 false의 토글(2점)
+                    repaint(); //⑥ 다시 그리기 지시(1점)
+                }
+            });
+        }
+    }
+
+    public static void main(String[] args) {
+        new ActionListenerEx_06();
+    }
+}
+
+- 1. label.setVisible(true);
+2. label.setVisible(false);
+3,4. button.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        showFlag = !showFlag;
+        }
+    });
+5. repaint()
+
+7. 다음 조건을 만족하는 리스트와 다이얼로그 프로그램을 완성하시오. (총 18점)
+1) ‘리스트 변경 예제’ 창에 ‘이름 입력 후 <Enter> 키’의 텍스트 란에 이름을 입력한 후 Enter를 누른다. 
+2) 아래 그림과 같이 확인 다이얼로그가 나타난다. “Yes” 버튼을 선택하면 리스트목록에 입력된 텍스트를 추가하고, “No” 버튼을 선택하면 
+텍스트 입력란에서 입력된 텍스트를 지운다. 확인 다이얼로그 창의 X를 누르면 원래 입력된 상태로 되돌아온다.
+
+import ..... //코드생략
+
+public class DialogListEx_07 extends JFrame {
+    private JTextField tf = ; // ① 열의 개수가 10인 JTextField 객체 생성(1점)
+    private Vector<String> v = ; //② Vector 객체 생성(1점)
+    private JList<String> nameList = ; // ③ JList 객체 생성(1점)
+
+    public DialogListEx_07() {
+        setTitle("리스트 변경 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        c.add(new JLabel("이름 입력 후 <Enter> 키"));
+        // .................... 컨텐트팬에 JTextField 추가/ / 코드 생략 
+        // ..................... Vector에 항목(이름) 추가 // 코드 생략
+        nameList.setVisibleRowCount(5); // 리스트가 보여주는 행의 수
+        nameList.setFixedCellWidth(100); // 리스트의 폭
+        c. ; // ④ JScrollPane이 설정된 리스트를 컨텐트팬에 부착(2점)
+        ; // ⑤ 벡터에 추가된 텍스트를 리스트에 추가하기(3점)
+        setSize(300, 250);
+        setVisible(true);
+        tf. ; // JTextField에 ActionListener 등록. <Enter> 키 처리(코드 생략)
+        public void  { //액션 리스너 실행(코드 생략)
+            JTextField t = ; //JTextField의 레퍼런스 알아내기(코드 생략)
+            //⑥ 입력된 텍스트 저장 여부를 묻는 다이얼로그(3점)
+            int result = JOptionPane.showConfirmDialog(null, "저장할까요?", "Save(Yes/No)", ); 
+            // 사용자가 선택한 버튼에 따라 문자열을 리스트 창에 출력
+            if(result == ) // ⑦ 다이얼로그 닫기 창 선택한 경우(1점)
+                return; // 그냥 리턴
+            else if(result == ) { // ⑧ "YES"를 선택한 경우 리스트에 입력된 텍스트 추가(1점)
+                v. ; // ⑨ 텍스트에 입력된 값을 벡터에 추가(2점)
+                t. ; // ⑩ 텍스트 필드 내용 지우기(1점)
+                nameList. ; //⑪ 벡터에 추가된 텍스트를 리스트에 추가하기(2점)
+            } else { // "NO"를 선택한 경우 
+                //...................... 텍스트 필드 내용 지우기(⑩과 동일, 코드 생략)
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        new DialogListEx_07();
+    }
+}
+
+- 1. new JTextField(10);
+2. new Vector<String>();
+3. new JList<String>();
+4. c.add(new JScrollPane(nameList));
+5. nameList.setListData(v);
+6. JOptionPane.showConfirmDialog(null,"저장할까요?", "Save(Yes/No)",JOptionPane.YES_NO_OPTION);
+7. JOptionPane.CLOSED_OPTION
+8. JOPtionPane.YES_OPTION
+9. v.add(t.getText());
+10. t.setText("");
+11. nameList.setListData(v);
+
